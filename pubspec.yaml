@@ -40,6 +40,7 @@ dependencies:
   show_overlay: ^1.0.8
   overlayment: ^0.1.1
   provider: ^6.0.3
+  audio_video_progress_bar: ^0.10.0
 
 dev_dependencies:
   flutter_test:

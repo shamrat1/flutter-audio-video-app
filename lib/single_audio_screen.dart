@@ -191,26 +191,26 @@ class ControlButtons extends StatelessWidget {
                 processingState == ProcessingState.buffering) {
               return Container(
                 margin: const EdgeInsets.all(8.0),
-                width: 64.0,
-                height: 64.0,
+                width: 30.0,
+                height: 30.0,
                 child: const CircularProgressIndicator(),
               );
             } else if (playing != true) {
               return IconButton(
                 icon: const Icon(Icons.play_arrow),
-                iconSize: 64.0,
+                iconSize: 30.0,
                 onPressed: player.play,
               );
             } else if (processingState != ProcessingState.completed) {
               return IconButton(
                 icon: const Icon(Icons.pause),
-                iconSize: 64.0,
+                iconSize: 30.0,
                 onPressed: player.pause,
               );
             } else {
               return IconButton(
                 icon: const Icon(Icons.replay),
-                iconSize: 64.0,
+                iconSize: 30.0,
                 onPressed: () => player.seek(Duration.zero),
               );
             }

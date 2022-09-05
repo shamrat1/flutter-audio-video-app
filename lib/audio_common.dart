@@ -8,6 +8,7 @@ class SeekBar extends StatefulWidget {
   final Duration bufferedPosition;
   final ValueChanged<Duration>? onChanged;
   final ValueChanged<Duration>? onChangeEnd;
+  final bool showThumb;
 
   const SeekBar({
     Key? key,
@@ -16,6 +17,7 @@ class SeekBar extends StatefulWidget {
     required this.bufferedPosition,
     this.onChanged,
     this.onChangeEnd,
+    this.showThumb = true,
   }) : super(key: key);
 
   @override
@@ -41,7 +43,7 @@ class SeekBarState extends State<SeekBar> {
       children: [
         SliderTheme(
           data: _sliderThemeData.copyWith(
-            thumbShape: HiddenThumbComponentShape(),
+            thumbShape: widget.showThumb ? HiddenThumbComponentShape() : null,
             activeTrackColor: Colors.blue.shade100,
             inactiveTrackColor: Colors.grey.shade300,
           ),
@@ -93,16 +95,16 @@ class SeekBarState extends State<SeekBar> {
             },
           ),
         ),
-        Positioned(
-          right: 16.0,
-          bottom: 0.0,
-          child: Text(
-              RegExp(r'((^0*[1-9]\d*:)?\d{2}:\d{2})\.\d+$')
-                      .firstMatch("$_remaining")
-                      ?.group(1) ??
-                  '$_remaining',
-              style: Theme.of(context).textTheme.caption),
-        ),
+        // Positioned(
+        //   right: 16.0,
+        //   bottom: 0.0,
+        //   child: Text(
+        //       RegExp(r'((^0*[1-9]\d*:)?\d{2}:\d{2})\.\d+$')
+        //               .firstMatch("$_remaining")
+        //               ?.group(1) ??
+        //           '$_remaining',
+        //       style: Theme.of(context).textTheme.caption),
+        // ),
       ],
     );
   }

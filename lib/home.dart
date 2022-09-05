@@ -1,8 +1,16 @@
+import 'package:audio_test/audio_state.dart';
 import 'package:audio_test/screen_three.dart';
 import 'package:audio_test/screen_two.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:provider/provider.dart';
+
+class AudioObject {
+  final String title, subtitle, img, url;
+
+  const AudioObject(this.title, this.subtitle, this.img, this.url);
+}
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -12,10 +20,32 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List<String> _audioUrls = [
-    "https://download.samplelib.com/mp3/sample-15s.mp3",
-    "https://download.samplelib.com/mp3/sample-15s.mp3",
-    "https://download.samplelib.com/mp3/sample-15s.mp3",
+  List<AudioObject> _audioUrls = [
+    AudioObject(
+        'Salt & Pepper',
+        'Dope Lemon',
+        'https://placekitten.com/640/360',
+        "https://download.samplelib.com/mp3/sample-15s.mp3"),
+    AudioObject('Losing It', 'FISHER', 'https://placekitten.com/640/360',
+        "https://download.samplelib.com/mp3/sample-15s.mp3"),
+    AudioObject(
+        'American Kids',
+        'Kenny Chesney',
+        'https://placekitten.com/640/360',
+        "https://download.samplelib.com/mp3/sample-15s.mp3"),
+    AudioObject('Wake Me Up', 'Avicii', 'https://placekitten.com/640/360',
+        "https://download.samplelib.com/mp3/sample-15s.mp3"),
+    AudioObject('Missing You', 'Mesto', 'https://placekitten.com/640/360',
+        "https://download.samplelib.com/mp3/sample-15s.mp3"),
+    AudioObject('Drop it dirty', 'Tavengo', 'https://placekitten.com/640/360',
+        "https://download.samplelib.com/mp3/sample-15s.mp3"),
+    AudioObject('Cigarettes', 'Tash Sultana', 'https://placekitten.com/640/360',
+        "https://download.samplelib.com/mp3/sample-15s.mp3"),
+    AudioObject(
+        'Ego Death',
+        'Ty Dolla \$ign, Kanye West, FKA Twigs, Skrillex',
+        'https://placekitten.com/640/360',
+        "https://download.samplelib.com/mp3/sample-15s.mp3"),
   ];
 
   @override
@@ -49,29 +79,10 @@ class _HomePageState extends State<HomePage> {
         itemCount: _audioUrls.length,
         itemBuilder: (context, index) {
           return ListTile(
-            title: Text("Audio $index"),
+            title: Text(_audioUrls[index].title),
             onTap: () {
-              // Navigator.of(context).push(MaterialPageRoute(
-              //     builder: (ctx) =>
-              //         SingleAudioScreen(audioUrl: _audioUrls[index])));
-              // showOverlay(
-              //     context: context,
-              //     builder: (context, animation, s) {
-              //       return SingleAudioScreen(audioUrl: _audioUrls[index]);
-              //     });
-              // Overlayment.show(OverWindow(
-              //     name: "audio",
-              //     // position: state.offset,
-              //     // actions: OverlayActions(),
-              //     alignment: Alignment.bottomCenter,
-              //     child: Miniplayer(
-              //       maxHeight: 500,
-              //       minHeight: 50,
-              //       controller: MiniplayerController(),
-              //       builder: (height, percentage) {
-              //         return Text("$height | $percentage");
-              //       },
-              //     )));
+              context.read<AudioState>().setUrl(_audioUrls[index]);
+              context.read<AudioState>().setPanelToMax();
             },
           );
         },
