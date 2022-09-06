@@ -1,9 +1,11 @@
 import 'package:audio_test/audio_state.dart';
 import 'package:audio_test/screen_three.dart';
 import 'package:audio_test/screen_two.dart';
+import 'package:audio_test/video_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:overlayment/overlayment.dart';
 import 'package:provider/provider.dart';
 
 class AudioObject {
@@ -52,7 +54,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(
-        items: [
+        items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
           BottomNavigationBarItem(icon: Icon(Icons.wallet), label: "Wallet"),
           BottomNavigationBarItem(icon: Icon(Icons.settings), label: "Profile"),

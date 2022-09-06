@@ -21,6 +21,7 @@ class SingleAudioScreen extends StatefulWidget {
 class _SingleAudioScreenState extends State<SingleAudioScreen> {
   final player = AudioPlayer();
   double _height = 0;
+  double _width = 0;
   bool _isExpanded = true;
   Offset _offset = Offset(0, 0);
   @override
@@ -71,6 +72,7 @@ class _SingleAudioScreenState extends State<SingleAudioScreen> {
   Widget build(BuildContext context) {
     if (_isExpanded) {
       _height = MediaQuery.of(context).size.height * 0.99;
+      _width = MediaQuery.of(context).size.height - 1;
     }
     return Consumer<OffsetState>(builder: (context, state, _) {
       return AnimatedPositioned(
@@ -88,14 +90,17 @@ class _SingleAudioScreenState extends State<SingleAudioScreen> {
               if (_isExpanded)
                 IconButton(
                     onPressed: () {
-                      print(MediaQuery.of(context).size.height * 0.90);
                       setState(() {
                         _isExpanded = false;
-                        _height = MediaQuery.of(context).size.height * 0.10;
+                        _height = 300;
+                        _width = 400;
                         // audioOffset =
                         //     Offset(0, MediaQuery.of(context).size.height * 0.90);
                         context.read<OffsetState>().update(Offset(
-                            0, -MediaQuery.of(context).size.height * 0.90));
+                            MediaQuery.of(context).size.width - _width,
+                            MediaQuery.of(context).size.height -
+                                kBottomNavigationBarHeight -
+                                _height));
                       });
                     },
                     icon: Icon(

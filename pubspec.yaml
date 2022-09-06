@@ -41,6 +41,7 @@ dependencies:
   overlayment: ^0.1.1
   provider: ^6.0.3
   audio_video_progress_bar: ^0.10.0
+  chewie: ^1.0.0
 
 dev_dependencies:
   flutter_test:

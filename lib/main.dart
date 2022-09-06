@@ -1,10 +1,12 @@
 import 'package:audio_test/audio_common.dart';
+import 'package:audio_test/audio_screen.dart';
 import 'package:audio_test/audio_state.dart';
 import 'package:audio_test/home.dart';
 import 'package:audio_test/offset_state.dart';
 import 'package:audio_test/screen_three.dart';
 import 'package:audio_test/screen_two.dart';
 import 'package:audio_test/single_audio_screen.dart';
+import 'package:audio_test/video_screen.dart';
 import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:just_audio_background/just_audio_background.dart';
@@ -71,7 +73,19 @@ class _MyHomePageState extends State<MyHomePage> {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: Text(widget.title),
+          title: Text("Title"),
+          actions: [
+            Consumer<OffsetState>(builder: (context, state, _) {
+              return IconButton(
+                  onPressed: () {
+                    Overlayment.show(OverWindow(
+                        canMove: true,
+                        position: state.offset,
+                        child: VideoScreen()));
+                  },
+                  icon: Icon(Icons.play_arrow));
+            })
+          ],
         ),
         body: Consumer<AudioState>(builder: (context, state, _) {
           return Stack(
@@ -93,93 +107,8 @@ class _MyHomePageState extends State<MyHomePage> {
                     minHeight: playerMinHeight,
                     valueNotifier: playerExpandProgress,
                     controller: state.controller,
-                    onDismiss: () {
-                      state.player.stop();
-                    },
                     builder: (height, percentage) {
-                      return Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          if (percentage == 0)
-                            StreamBuilder<PositionData>(
-                              stream: state.positionDataStream,
-                              builder: (context, snapshot) {
-                                final positionData = snapshot.data;
-                                return ProgressBar(
-                                  barHeight: 2,
-                                  thumbRadius: 0,
-                                  thumbGlowRadius: 0,
-                                  thumbColor: Colors.transparent,
-                                  thumbCanPaintOutsideBar: false,
-                                  buffered: positionData?.bufferedPosition ??
-                                      Duration.zero,
-                                  progress:
-                                      positionData?.position ?? Duration.zero,
-                                  total:
-                                      positionData?.duration ?? Duration.zero,
-                                  onSeek: state.player.seek,
-                                  timeLabelLocation: percentage > 99
-                                      ? TimeLabelLocation.below
-                                      : TimeLabelLocation.none,
-                                );
-                              },
-                            ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              AnimatedContainer(
-                                height:
-                                    percentage > 0 ? 50 * (percentage + 1) : 50,
-                                duration: Duration(milliseconds: 200),
-                                child: Image.network(
-                                  state.audio?.img ??
-                                      "https://www.fillmurray.com/640/360",
-                                ),
-                              ),
-                              if (percentage < 1) Spacer(),
-                              // if (percentage < 1)
-                              Opacity(
-                                opacity: percentage == 1 ? 0 : 1,
-                                child: ControlButtons(state.player),
-                              ),
-                              // if (percentage == 0) ControlButtons(state.player),
-                              if (percentage == 0)
-                                IconButton(
-                                  onPressed: () => state.controller
-                                      .animateToHeight(
-                                          state: PanelState.DISMISS),
-                                  icon: Icon(Icons.close),
-                                ),
-                            ],
-                          ),
-                          if (percentage == 1)
-                            StreamBuilder<PositionData>(
-                              stream: state.positionDataStream,
-                              builder: (context, snapshot) {
-                                final positionData = snapshot.data;
-                                return Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 8.0),
-                                  child: ProgressBar(
-                                    thumbCanPaintOutsideBar: false,
-                                    buffered: positionData?.bufferedPosition ??
-                                        Duration.zero,
-                                    progress:
-                                        positionData?.position ?? Duration.zero,
-                                    total:
-                                        positionData?.duration ?? Duration.zero,
-                                    onSeek: state.player.seek,
-                                    timeLabelLocation: percentage > 99
-                                        ? TimeLabelLocation.below
-                                        : TimeLabelLocation.none,
-                                  ),
-                                );
-                              },
-                            ),
-                          if (percentage == 1) ControlButtons(state.player),
-                        ],
-                      );
+                      return AudioScreen(percentage: percentage);
                     },
                   ),
                 )

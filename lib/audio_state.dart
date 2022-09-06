@@ -50,6 +50,7 @@ class AudioState extends ChangeNotifier {
   setUrl(AudioObject audioObject) {
     audio = audioObject;
     _init();
+
     notifyListeners();
   }
 
@@ -59,9 +60,10 @@ class AudioState extends ChangeNotifier {
   }
 
   close() {
-    controller.animateToHeight(state: PanelState.DISMISS);
-    player.dispose();
-    controller.dispose();
+    audio = null;
+    player.stop();
+    // positionDataStream
+    notifyListeners();
   }
 
   setPanelToMin() {
