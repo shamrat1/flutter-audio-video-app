@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:audio_test/audio_common.dart';
 import 'package:audio_test/home.dart';
 import 'package:flutter/cupertino.dart';
@@ -48,6 +50,12 @@ class AudioState extends ChangeNotifier {
               position, bufferedPosition, duration ?? Duration.zero));
 
   setUrl(AudioObject audioObject) {
+    if (audio == null) {
+      Timer(const Duration(milliseconds: 200), () {
+        print("From Timer");
+        setPanelToMax();
+      });
+    }
     audio = audioObject;
     _init();
 
