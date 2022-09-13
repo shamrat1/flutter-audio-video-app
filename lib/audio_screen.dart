@@ -47,19 +47,31 @@ class _AudioScreenState extends State<AudioScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               AnimatedContainer(
-                height:
-                    widget.percentage > 0 ? 50 * (widget.percentage + 1) : 50,
-                duration: Duration(milliseconds: 200),
+                padding: EdgeInsets.only(
+                    left: widget.percentage == 1
+                        ? 0
+                        : valueFromPercentageInRange(
+                            min: 8, max: 50, percentage: widget.percentage)),
+                // padding: EdgeInsets.only(
+                // left: widget.percentage < 0.5
+                //     ? (widget.percentage * 95)
+                //     : (widget.percentage * 10)),
+                // height:
+                //     widget.percentage > 0 ? 50 * (widget.percentage + 1) : 50,
+                height: valueFromPercentageInRange(
+                    min: 50, max: 150, percentage: widget.percentage),
+                duration: const Duration(milliseconds: 200),
                 child: Image.network(
                   state.audio?.img ?? "https://www.fillmurray.com/640/360",
+                  fit: BoxFit.fill,
                 ),
               ),
               if (widget.percentage < 1) Spacer(),
               // if (percentage < 1)
-              Opacity(
-                opacity: widget.percentage == 1 ? 0 : 1,
-                child: ControlButtons(state.player),
-              ),
+              // Opacity(
+              //   opacity: widget.percentage == 1 ? 0 : 1,
+              //   child: ControlButtons(state.player),
+              // ),
               // if (percentage == 0) ControlButtons(state.player),
               if (widget.percentage == 0)
                 IconButton(
@@ -93,4 +105,9 @@ class _AudioScreenState extends State<AudioScreen> {
       );
     });
   }
+}
+
+double valueFromPercentageInRange(
+    {required final double min, max, percentage}) {
+  return percentage * (max - min) + min;
 }

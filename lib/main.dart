@@ -1,13 +1,8 @@
-import 'package:audio_test/audio_common.dart';
 import 'package:audio_test/audio_screen.dart';
 import 'package:audio_test/audio_state.dart';
 import 'package:audio_test/home.dart';
 import 'package:audio_test/offset_state.dart';
-import 'package:audio_test/screen_three.dart';
-import 'package:audio_test/screen_two.dart';
-import 'package:audio_test/single_audio_screen.dart';
 import 'package:audio_test/video_screen.dart';
-import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:just_audio_background/just_audio_background.dart';
 import 'package:miniplayer/miniplayer.dart';
